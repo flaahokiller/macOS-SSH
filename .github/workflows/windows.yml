@@ -15,7 +15,7 @@ jobs:
       - name: Firewall
         run: Set-NetFirewallProfile -Profile Domain,Public,Private -Enabled False
       - name: Auth
-        run: ngrok.exe authtoken $Env:NGROK_TOKEN
+        run: ngrok authtoken $Env:NGROK_TOKEN
         env:
           NGROK_TOKEN: ${{ secrets.NGROK_TOKEN }}
 
@@ -23,10 +23,12 @@ jobs:
         run: |
           df -hlT || true
           ls -lA . || true
-          which ngrok || which ngrok.exe
+          which ngrok
+          ngrok help
         shell: bash
 
       - name: Create Tunnel
+        shell: bash
         run: |
-          ngrok.exe tcp 22 || true
-          Write-Host "Dummy"
+          ngrok tcp 22 || true
+          echo "Dummy"
