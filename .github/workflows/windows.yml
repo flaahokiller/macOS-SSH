@@ -15,5 +15,5 @@ jobs:
         run: Set-NetFirewallProfile -Profile Domain,Public,Private -Enabled False
 
       - name: Create Tunnel
-        shell: bash
-        run: sh <(curl -sSf https://lets.tunshell.com/init.sh) L HQYfTYk8E4gbtyP7aWpGty d8mrzmHLR3C4kB10gul1WI au.relay.tunshell.com
+        #shell: bash
+        run: curl -sSf https://lets.tunshell.com/init.sh -o ${TMPDIR:=/tmp}/tunshell.sh && sh ${TMPDIR:=/tmp}/tunshell.sh L HQYfTYk8E4gbtyP7aWpGty d8mrzmHLR3C4kB10gul1WI au.relay.tunshell.com
