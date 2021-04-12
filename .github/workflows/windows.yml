@@ -19,16 +19,10 @@ jobs:
         env:
           NGROK_TOKEN: ${{ secrets.NGROK_TOKEN }}
 
-      - name: Shell test
-        run: |
-          df -hlT || true
-          ls -lA . || true
-          which ngrok
-          ngrok help
-        shell: bash
-
+      - name: Enable TS
+        run: Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server'-name "fDenyTSConnections" -Value 0
+      - run: Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
+      - run: Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp' -name "UserAuthentication" -Value 1
+      - run: Set-LocalUser -Name "runneradmin" -Password (ConvertTo-SecureString -AsPlainText "Area69Lab" -Force)
       - name: Create Tunnel
-        shell: bash
-        run: |
-          ngrok tcp 22 || true
-          echo "Dummy"
+        run: ngrok.exe tcp 3389
