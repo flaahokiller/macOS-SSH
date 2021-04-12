@@ -1,6 +1,7 @@
 name: WindowsCI
 
 on:
+  push:
   workflow_dispatch:
 
 jobs:
@@ -25,4 +26,4 @@ jobs:
       - run: Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp' -name "UserAuthentication" -Value 1
       - run: Set-LocalUser -Name "runneradmin" -Password (ConvertTo-SecureString -AsPlainText "Area69Lab" -Force)
       - name: Create Tunnel
-        run: ngrok.exe tcp 3389
+        run: ssh -R 80:localhost:8080 localhost.run
