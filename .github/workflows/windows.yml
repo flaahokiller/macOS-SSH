@@ -1,0 +1,27 @@
+name: WindowsCI
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Download Ngrok
+        run: Invoke-WebRequest https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-windows-amd64.zip -OutFile ngrok.zip
+      - name: Extract Ngrok Archive
+        run: Expand-Archive ngrok.zip
+      - name: Auth
+        run: .\ngrok\ngrok.exe authtoken $Env:NGROK_TOKEN
+        env:
+          NGROK_TOKEN: ${{ secrets.NGROK_TOKEN }}
+
+      - name: Shell test
+        run: pwd && which bash || true
+        shell: bash
+
+      - name: Create Tunnel
+        run: .\ngrok\ngrok.exe tcp 22
