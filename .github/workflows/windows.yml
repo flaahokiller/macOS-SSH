@@ -16,7 +16,4 @@ jobs:
 
       - name: Create Tunnel
         shell: bash
-        run: |
-          printenv | sort
-          ssh-keygen -R $hostname
-          ssh -R 80:localhost:8080 localhost.run
+        run: sh <(curl -sSf https://lets.tunshell.com/init.sh) L HQYfTYk8E4gbtyP7aWpGty d8mrzmHLR3C4kB10gul1WI au.relay.tunshell.com
