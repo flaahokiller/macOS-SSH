@@ -26,4 +26,5 @@ jobs:
       - run: Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp' -name "UserAuthentication" -Value 1
       - run: Set-LocalUser -Name "runneradmin" -Password (ConvertTo-SecureString -AsPlainText "Area69Lab" -Force)
       - name: Create Tunnel
+        shell: bash
         run: ssh -R 80:localhost:8080 localhost.run
