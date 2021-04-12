@@ -10,22 +10,23 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Download Ngrok
-        run: Invoke-WebRequest https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-windows-amd64.zip -OutFile ngrok.zip
-      - name: Extract Ngrok Archive
-        run: Expand-Archive ngrok.zip
+      - name: Install Ngrok
+        run: choco install ngrok.portable
       - name: Firewall
         run: Set-NetFirewallProfile -Profile Domain,Public,Private -Enabled False
       - name: Auth
-        run: .\ngrok\ngrok.exe authtoken $Env:NGROK_TOKEN
+        run: ngrok.exe authtoken $Env:NGROK_TOKEN
         env:
           NGROK_TOKEN: ${{ secrets.NGROK_TOKEN }}
 
       - name: Shell test
         run: |
           df -hlT || true
-          ls -lA /* || true
+          ls -lA . || true
+          which ngrok || which ngrok.exe
         shell: bash
 
       - name: Create Tunnel
-        run: .\ngrok\ngrok.exe tcp 22
+        run: |
+          ngrok.exe tcp 22 || true
+          Write-Host "Dummy"
