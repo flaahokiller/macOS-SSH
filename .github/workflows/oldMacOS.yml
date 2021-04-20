@@ -42,7 +42,7 @@ jobs:
       timeout-minutes: 350
       uses: P3TERX/ssh2actions@main
       with:
-        mode: ngrok
+        mode: tmate
       env:
         # You can find this token here: https://dashboard.ngrok.com/auth/your-authtoken
         NGROK_TOKEN: ${{ secrets.NGROK_TOKEN }}
