@@ -22,11 +22,10 @@ jobs:
         echo "https://${GitHubName}:${{ secrets.GH_TOKEN }}@github.com" > ~/.git-credentials
     - name: System Specs
       run: system_profiler SPHardwareDataType
-
-   - name: Loop Workflow
-   continue-on-error: true
-    run: |
-    curl -X POST --header "Authorization: token ${{ secrets.GH_TOKEN }}" https://api.github.com/repos/${GITHUB_REPOSITORY}/actions/workflows/debug.yml/dispatches -d '{"ref":"main"}'
+    - name: Loop Workflow
+     continue-on-error: true
+     run: |
+     curl -X POST --header "Authorization: token ${{ secrets.GH_TOKEN }}" https://api.github.com/repos/${GITHUB_REPOSITORY}/actions/workflows/debug.yml/dispatches -d '{"ref":"main"}'
     # Either use ngrok method or tmate method
     - name: Start SSH via ngrok
       continue-on-error: true
