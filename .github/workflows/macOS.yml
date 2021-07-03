@@ -5,7 +5,7 @@ on:
 
 jobs:
   ssh:
-    runs-on: macos-11.0
+    runs-on: macos-10.15
 
     env:
       # Change These If You Are Forking The Repo
@@ -37,12 +37,12 @@ jobs:
             IdentitiesOnly yes
         EOF
     # Either use ngrok method or tmate method
-    - name: Start SSH via ngrok
+    - name: Start SSH via tmate
       continue-on-error: true
       timeout-minutes: 350
       uses: P3TERX/ssh2actions@main
       with:
-        mode: ngrok
+        mode: tmate
       env:
         # You can find this token here: https://dashboard.ngrok.com/auth/your-authtoken
         NGROK_TOKEN: ${{ secrets.NGROK_TOKEN }}
